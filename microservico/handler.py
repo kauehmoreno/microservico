@@ -1,5 +1,6 @@
 import tornado.ioloop
 import tornado.web
+import asyncio
 
 def main():
     from urls import urlspatterns
@@ -15,6 +16,7 @@ def main():
     app.db = db
     app.settings = settings
     app.listen(8888)
+    tornado.ioloop.IOLoop.configure('tornado.platform.asyncio.AsyncIOLoop')
     tornado.ioloop.IOLoop.current().start()
 
 if __name__ == "__main__":
