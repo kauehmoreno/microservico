@@ -36,13 +36,19 @@ class DBbridge(object):
 
     @classmethod
     async def insert(cls, **kwargs):
-        await self.client.test_collection.insert_one(kwargs)
+        def operation_callback(result, error):
+            raise error if error else None
+        await self.client.test_collection.insert_one(kwargs, callback=operation_callback)
 
 
     @classmethod
     async def bulk_insert(cls, bulk):
+        def operation_callback(result, error):
+            if error:
+                raise error
+
         def insert(item):
-            await self.client.test_collection.insert_one(item)
+            await self.client.test_collection.insert_one(item, callback=operation_callback)
         map(insert, bulk)
 
 
