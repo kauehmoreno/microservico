@@ -7,6 +7,7 @@ def main():
     from helpers.db_client import Client
 
     settings = dict(template_path=template_path)
+
     db = Client('materia')
     db = db.instance
 
