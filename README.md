@@ -15,6 +15,7 @@
 | Materia com vídeos | apachebanchmark, wrk, PagesppedTest, speedcurve | Microserviço |
 
 `Rotas da Aplicação`
+
 | Função  |  parametros |
 | -------- | ----------- |
 | Todas as matérias | Filtro per_page, Filtro order_by(default será publicacao), uuid retorná uma única matéria |
