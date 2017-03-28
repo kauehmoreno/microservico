@@ -12,7 +12,7 @@ class Client(object):
 
     @property
     def instance(self):
-        return self.__client
+        return self.__client.database_name
 
     def __create_database(self):
         self.__client[self.database_name]
