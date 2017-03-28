@@ -11,7 +11,7 @@ def main():
     db = db.instance
 
     app = urlspatterns()
-    app.db = db.materia
+    app.db = db
     app.settings = settings
     app.listen(8888)
     tornado.ioloop.IOLoop.current().start()
