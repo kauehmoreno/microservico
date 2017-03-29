@@ -79,8 +79,8 @@ class DBbridge(object):
     async def update(self, **kwargs):
         uuid = _dict.get('uuid', '')
         if uuid:
-            await self.client.test_collection.replace_one({'uuid': uuid}, kwargs)
+           return await self.client.test_collection.replace_one({'uuid': uuid}, kwargs)
 
 
     async def delete(self, uuid):
-        await db.test_collection.delete_one({'uuid': uuid})
+        return await db.test_collection.delete_one({'uuid': uuid})
