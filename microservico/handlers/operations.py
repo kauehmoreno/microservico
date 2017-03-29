@@ -44,10 +44,6 @@ class Integrator(tornado.web.RequestHandler):
                     future = asyncio.ensure_future(db_client.insert(**body))
                 if operation == 'delete':
                     pass
-                if operation == 'bulk_insert':
-                    pass
-                if operation == 'bulk_delete':
-                    pass
                 if operation == 'update':
                     pass
 
@@ -70,16 +66,3 @@ class Integrator(tornado.web.RequestHandler):
             405,
             'Method not allowed - please review http method use'
         )
-
-    async def _operation(self, db_client, operation, body):
-
-        if operation == 'insert':
-           return await db_client.insert(**body)
-        if operation == 'delete':
-           return await db_client.delete(body.get('uuid'))
-        if operation == 'bulk_insert':
-            return await db_client.bulk_insert(body)
-        if operation == 'bulk_delete':
-            return await db_client.bulk_delete(body)
-        if operation == 'update':
-            return await db_client.update(body.get('uuid'))
