@@ -58,7 +58,13 @@ class DBbridge(object):
         else:
             order_by = order_by
 
-        return await self.client.test_collection.find().sort({'data_publicacao': order_by}).limit(limit)
+        cursor = self.client.test_collection.find().sort('data_publicacao', order_by).limit(limit)
+        result = []
+        for document in await cursor.to_list(length=100):
+            document.pop('_id')
+            result.append(document)
+
+        return result
 
 
     async def get(self, uuid):
