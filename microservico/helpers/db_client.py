@@ -3,23 +3,34 @@ import logging
 import motor
 import json
 from tornado.ioloop import IOLoop
+from tornado import gen
+import motor.motor_asyncio
+
 
 class Client(object):
 
-    def __init__(self, database_name):
+    def __init__(self, database_name, collection_name):
         self.database_name = database_name
-        self.__client = motor.motor_tornado.MotorClient(
+        self.collection_name = collection_name
+        self.__client = motor.motor_asyncio.AsyncIOMotorClient(
             'localhost', 27017
         )
-        self.__create_database()
+        self.__db = self.__create_database()
+        self.__collection = self.__create_collection()
+
 
     @property
     def instance(self):
         materia = self.database_name
-        return self.__client.materia
+        return self.__collection
 
     def __create_database(self):
-        self.__client[self.database_name]
+        db = self.__client[self.database_name]
+        return db
+
+    def __create_collection(self):
+        collection = self.__db[self.collection_name]
+        return collection
 
 
 
@@ -34,12 +45,9 @@ class DBbridge(object):
             )
         self.client = client
 
-    @classmethod
-    async def insert(cls, **kwargs):
-        def operation_callback(result, error):
-            raise error if error else None
-        await self.client.test_collection.insert_one(kwargs, callback=operation_callback)
-
+    async def insert(self, **kwargs):
+        result =  await self.client.test_collection.insert_one(kwargs)
+        return result
 
     @classmethod
     async def bulk_insert(cls, bulk):
@@ -47,8 +55,8 @@ class DBbridge(object):
             if error:
                 raise error
 
-        def insert(item):
-            await self.client.test_collection.insert_one(item, callback=operation_callback)
+        async def insert(item):
+            return await self.client.test_collection.insert_one(item, callback=operation_callback)
         map(insert, bulk)
 
 
@@ -89,7 +97,7 @@ class DBbridge(object):
 
     @classmethod
     async def bulk_delete(self, bulk):
-        def delete(uuid):
+        async def delete(uuid):
             await db.test_collection.delete_one({'uuid': uuid})
 
         map(delete, bulk)
