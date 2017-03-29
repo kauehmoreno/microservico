@@ -50,17 +50,6 @@ class DBbridge(object):
         return result
 
     @classmethod
-    async def bulk_insert(cls, bulk):
-        def operation_callback(result, error):
-            if error:
-                raise error
-
-        async def insert(item):
-            return await self.client.test_collection.insert_one(item, callback=operation_callback)
-        map(insert, bulk)
-
-
-    @classmethod
     async def filter(self, limit=None, order_by=None):
         if limit is None:
             limit = 20
@@ -94,10 +83,3 @@ class DBbridge(object):
     async def delete(self, uuid):
         await db.test_collection.delete_one({'uuid': uuid})
 
-
-    @classmethod
-    async def bulk_delete(self, bulk):
-        async def delete(uuid):
-            await db.test_collection.delete_one({'uuid': uuid})
-
-        map(delete, bulk)
