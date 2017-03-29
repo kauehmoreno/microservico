@@ -9,7 +9,7 @@ def main():
 
     settings = dict(template_path=template_path)
 
-    db = Client('materia')
+    db = Client('materia', 'microservico')
     db = db.instance
 
     app = urlspatterns()
