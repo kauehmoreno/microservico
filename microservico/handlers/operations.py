@@ -10,9 +10,7 @@ from helpers.db_client import DBbridge
 class Integrator(tornado.web.RequestHandler):
     operations = (
         'insert',
-        'bulk_insert',
         'delete',
-        'bulk_delete',
         'update'
     )
 
