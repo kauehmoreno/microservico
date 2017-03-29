@@ -49,7 +49,6 @@ class DBbridge(object):
         result =  await self.client.test_collection.insert_one(kwargs)
         return result
 
-    @classmethod
     async def filter(self, limit=None, order_by=None):
         if limit is None:
             limit = 20
@@ -62,7 +61,6 @@ class DBbridge(object):
         return await self.client.test_collection.find().sort({'data_publicacao': order_by}).limit(limit)
 
 
-    @classmethod
     async def get(self, uuid):
         try:
             return await self.client.test_collection.find_one({'uuid': uuid})
@@ -72,14 +70,11 @@ class DBbridge(object):
             return {}
 
 
-    @classmethod
     async def update(self, **kwargs):
         uuid = _dict.get('uuid', '')
         if uuid:
             await self.client.test_collection.replace_one({'uuid': uuid}, kwargs)
 
 
-    @classmethod
     async def delete(self, uuid):
         await db.test_collection.delete_one({'uuid': uuid})
-
