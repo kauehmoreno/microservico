@@ -83,4 +83,4 @@ class DBbridge(object):
 
 
     async def delete(self, uuid):
-        return await db.test_collection.delete_one({'uuid': uuid})
+        return await self.client.db.test_collection.delete_one({'uuid': uuid})
