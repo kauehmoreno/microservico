@@ -35,29 +35,36 @@ class Integrator(tornado.web.RequestHandler):
 
             except AttributeError:
                 raise tornado.web.HTTPError(404)
-            try:
-                loop = asyncio.get_event_loop()
-
-                if operation == 'insert':
-                    future = asyncio.ensure_future(db_client.insert(**body))
-                if operation == 'delete':
-                    pass
-                if operation == 'update':
-                    pass
-
-                result = loop.run_until_complete(future)
-#                loop.close()
-            except Exception as e:
-                logging.error('Error: {}'.format(e))
-                raise tornado.web.HTTPError(500)
             else:
-                self.write('Ok - 201 {}'.format(result.inserted_id))
-                self.finish()
 
+                loop = asyncio.get_event_loop()
+                try:
+
+                    if operation == 'insert':
+                        future = asyncio.ensure_future(db_client.insert(**body))
+                    if operation == 'delete':
+                        future = asyncio.ensure_future(db_client.delete(uuid))
+                    if operation == 'update':
+                        future = asyncio.ensure_future(db_client.update(**body))
+
+                    result = loop.run_until_complete(future)
+#                loop.close()
+                except Exception as e:
+                    logging.error('Error: {}'.format(e))
+                    raise tornado.web.HTTPError(500)
+                else:
+                    try:
+                        self.write('Ok - 201 {}'.format(result.inserted_id))
+                    except AttributeError:
+                        self.write('OK - 204 {}'.format(result.raw_result))
+                    self.finish()
 
 
     def delete(self, *args, **kwargs):
-        pass
+        raise tornado.web.HTTPError(
+            405,
+            'Method not allowed - please review http method use'
+        )
 
     def put(self, *args, **kwargs):
         raise tornado.web.HTTPError(
