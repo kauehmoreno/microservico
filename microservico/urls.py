@@ -3,6 +3,7 @@ import tornado.web
 from handlers.main_page import MainHandler
 from handlers.materia import Materia, Materias
 from handlers.operations import Integrator
+from handlers.file_upload import Uploader
 from settings import static_path
 
 def urlspatterns():
@@ -11,6 +12,7 @@ def urlspatterns():
         (r'/materia/(?P<_id>[\w]+)/$', Materia),
         (r'/materias/(?P<order_by>[\w]+)/(?P<limit>[\d+]+)/$', Materias),
         (r'/api/v1/(?P<operation>[\w]+)/?$', Integrator),
+        ('/api/file_upload/$', Uploader),
         (r'/static/(.*)', tornado.web.StaticFileHandler, {'path': static_path})
     ])
 
