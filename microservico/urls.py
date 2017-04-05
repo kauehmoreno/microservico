@@ -9,7 +9,7 @@ from settings import static_path
 def urlspatterns():
     return tornado.web.Application([
         (r'/', MainHandler),
-        (r'/materia/(?P<_id>[\w]+)/$', Materia),
+        (r'/materia/(?P<_id>[\w-]+)/$', Materia),
         (r'/materias/(?P<order_by>[\w]+)/(?P<limit>[\d+]+)/$', Materias),
         (r'/api/v1/(?P<operation>[\w]+)/?$', Integrator),
         ('/api/file_upload/$', Uploader),
