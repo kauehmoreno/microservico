@@ -42,8 +42,9 @@
     <header class="header-image">
         <div class="headline">
             <div class="container">
-                <h1>Seja bem-vindo ao meu </h1>
-                <h2>trabaho monografia 2017.1</h2>
+                <h1>Trabalho </h1>
+                <h2>monografia 2017.1</h2>
+                <h3>Autor - Kauêh Moreno</h3>
             </div>
         </div>
     </header>
@@ -72,7 +73,6 @@
 
         <!-- Third Featurette -->
         <div class="featurette" id="contact">
-            <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
             <h2 class="featurette-heading"> Tecnologia usada
                 <span class="text-muted">neste projeto</span>
             </h2>
@@ -81,6 +81,28 @@
 
         <hr class="featurette-divider">
 
+        <div class="featurette" id="contact">
+            <h2 class="featurette-heading"> Rotas de acesso
+                <span class="text-muted">à aplicação</span>
+            </h2>
+            <p class="lead">
+                (r'/materia/(?P<_id>[\w-]+)/$'),
+            </p>
+            <p class="lead">
+                (r'/materias/(?P<order_by>[\w]+)/(?P<limit>[\d+]+)/$'),
+            </p>
+            <p class="lead">
+                (r'/api/v1/(?P<operation>[\w]+)/?$') - Rota de integração (Método POST)
+            </p>
+            <p class="lead">
+                ('/api/file_upload/$') - Rota de integração (Método POST)
+            </p>
+            <p class="lead">
+                (r'/static/(.*)')
+            </p>
+        </div>
+
+        <hr class="featurette-divider">
         <!-- Footer -->
         <footer>
             <div class="row">
