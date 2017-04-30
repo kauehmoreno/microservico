@@ -24,7 +24,7 @@ class Integrator(tornado.web.RequestHandler):
 
         try:
             print(self.request.body)
-            body = json.loads(self.request.body)
+            body = json.loads(self.request.body.decode('utf-8'))
         except ValueError as error:
             logging.error('Error: {}'.format(error))
             raise tornado.web.HTTPError(404)
