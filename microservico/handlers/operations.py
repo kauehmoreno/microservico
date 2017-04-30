@@ -23,7 +23,6 @@ class Integrator(tornado.web.RequestHandler):
         db_client = DBbridge(self.application.db)
 
         try:
-            print(self.request.body)
             body = json.loads(self.request.body.decode('utf-8'))
         except ValueError as error:
             logging.error('Error: {}'.format(error))
