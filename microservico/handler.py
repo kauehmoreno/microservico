@@ -16,6 +16,9 @@ def main():
     app.db = db
     app.settings = settings
     app.listen(8888)
+    app.listen(8889)
+    app.listen(8890)
+    app.listen(8891)
     tornado.ioloop.IOLoop.configure('tornado.platform.asyncio.AsyncIOLoop')
     tornado.ioloop.IOLoop.current().start()
 
